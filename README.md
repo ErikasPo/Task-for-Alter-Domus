@@ -31,7 +31,21 @@ properties “following” and “public_repos”</p>
 <p>* You will be the only developer working on this user stories and eventually your code will be
 maintained by another team. The project has sprints of ten days and it’s expected that you can finish
 both stories in the same sprint.</p>
-
+  
+  What will be evaluated
+* Research skills
+* Clear and maintainable code skills
+* Documentation (on code and outside of it)
+* OOP Concepts
+* Exceptions handling
+* Right usage of HTTP Protocol
+* Creativity
+* Look and feel (user experience)
+* Functionalities aligned with requirements
+* Suggestions of improvement
+* Unit/Integration Tests, Log implementation and right the usage of IOC, AutoMapper and
+other industry standard Libs will be considered as a plus.
+  
 ## About the Project
 - This project was built using ASP.NET MVC framework
 - Profile page is the start main page and has a search which brings and displays Git Hub user profile data "avatar", "login", “bio”, “company” and “location” and if “bio”, “company” and “location” are null/empty it creates a new element on the page with a notification message asking the user to fill in those details.
