@@ -1,0 +1,80 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+/*.dl-horizontal {
+    margin: auto;
+    width: 50%;
+    border: 3px solid black;
+    border-radius: 25px;
+    padding: 10px;
+}*/
+
+.searchBar {
+    margin: auto;
+    width: 33%;
+    border: 3px solid black;
+    border-radius: 25px;
+    padding: 10px;
+    margin-bottom: 1px;
+}
+
+#profileContainer {
+    margin: auto;
+    width: 33%;
+    border: 3px solid black;
+    border-radius: 25px;
+    padding: 10px;
+    text-align: center;
+}
+
+#repositoriesContainer {
+    margin: auto;
+    width: 33%;
+    border: 3px solid black;
+    border-radius: 25px;
+    padding: 10px;
+    text-align: center;
+}
+
+#followersContainer {
+    margin: auto;
+    width: 33%;
+    border: 3px solid black;
+    border-radius: 25px;
+    padding: 10px;
+    text-align: center;
+}
+
+.profileContainer li {
+    list-style: none
+}
+
+.repositoriesContainer li {
+    list-style: none
+}
+
+#followersContainer li {
+    list-style: none
+    
+}
+
+#profilenotification, #repositorynotification, #followersnotification {
+    color: red;
+    font-size: 20px;
+}

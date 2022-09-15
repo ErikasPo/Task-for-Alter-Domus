@@ -1,0 +1,57 @@
+﻿@model FollowersViewModel
+
+@{
+    ViewData["TITLE"] = "GitHubApp Followers Search";
+    ViewData["FOLLOWERSLABEL"] = "Followers:";
+    ViewData["FOLLOWERSMESSAGE"] = "You have less than 5 Followers, please create more projects!";
+    ViewData["USERALERT"] = "User not found!";
+}
+<div class="text-center">
+    <h1>@ViewData["TITLE"]</h1>
+</div>
+
+@using (Html.BeginForm())
+{
+    <div class="searchBar">
+        <form action="/Controller/FollowersController" method="post">
+            <label>Search:</label> @Html.TextBox("GitHubUsername", "", new {@placeholder = "Type in to search...", @required="required"})
+            <input class="searchBar" type="submit" value="Search" />
+        </form>
+    </div>
+}
+
+<script>
+    function showfollowers() {
+        let count = 0;
+        count = @Html.DisplayFor(model => model.FollowersList.Count);
+        let statuscode = 0;
+        statuscode = @Html.DisplayFor(model => model.StatusCode);
+        if (statuscode === 0) {
+            document.getElementById("followersContainer").style.display = "none";
+            alert("@ViewData["USERALERT"]");
+            console.log("@ViewData["USERALERT"]");
+        }
+        else {
+            document.getElementById("followersContainer").style.display = "block";
+        }
+        if (statuscode === 200 && count < 5) {
+            let div = document.createElement("div");
+            div.id = "followersnotification";
+            div.innerHTML = "@ViewData["FOLLOWERSMESSAGE"]";
+            document.getElementById("followersContainer").appendChild(div);
+        }
+    }
+    document.addEventListener("DOMContentLoaded", () => { showfollowers(); });
+</script>
+
+<div id="followersContainer">
+    <dl class="dl-horizontal">
+        <dt>
+            <label>@ViewData["FOLLOWERSLABEL"]</label>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FollowersList.Count)
+        </dd>
+
+    </dl>
+</div>

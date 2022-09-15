@@ -1,0 +1,57 @@
+﻿@model RepositoriesViewModel
+
+@{
+    ViewData["TITLE"] = "GitHubApp Repositories search";
+    ViewData["REPOSITORIESLABEL"] = "Repositories:";
+    ViewData["REPOSITORIESMESSAGE"] = "You have less than 5 Repositories, please create more projects!";
+    ViewData["USERALERT"] = "User not found!";
+}
+<div class="text-center">
+    <h1>@ViewData["TITLE"]</h1>
+</div>
+
+@using (Html.BeginForm())
+{
+    <div class="searchBar">
+        <form action="/Controller/RepositoriesController" method="post">
+            <label>Search:</label> @Html.TextBox("GitHubUsername", "", new {@placeholder = "Type in to search...", @required="required"})
+            <input class="searchBar" type="submit" value="Search" />
+        </form>
+    </div>
+}
+
+<script>
+    function showrepositories() {
+        let count = 0;
+        count = @Html.DisplayFor(model => model.RepositoriesList.Count);
+        let statuscode = 0;
+        statuscode = @Html.DisplayFor(model => model.StatusCode);
+        if (statuscode === 0) {
+            document.getElementById("repositoriesContainer").style.display = "none";
+            alert("@ViewData["USERALERT"]");
+            console.log("@ViewData["USERALERT"]");
+        }
+        else {
+            document.getElementById("repositoriesContainer").style.display = "block";
+        }
+        if (statuscode === 200 && count < 5) {
+            let div = document.createElement("div");
+            div.id = "repositorynotification";
+            div.innerHTML = "@ViewData["REPOSITORIESMESSAGE"]";
+            document.getElementById("repositoriesContainer").appendChild(div);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => { showrepositories(); });
+</script>
+
+<div id="repositoriesContainer">
+    <dl class="dl-horizontal">
+        <dt>
+            @ViewData["REPOSITORIESLABEL"]
+        </dt>
+        <dd>
+            <div id="repositoriesCount">@Html.DisplayFor(model => model.RepositoriesList.Count)</div>
+        </dd>
+    </dl>
+</div>

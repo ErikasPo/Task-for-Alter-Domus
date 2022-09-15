@@ -1,0 +1,74 @@
+﻿@model ProfileModel
+
+@{
+    ViewData["TITLE"] = "GitHubApp Profile search";
+    ViewData["PROFILEMESSAGE"] = "Please fill in the empty fields!";
+    ViewData["USERALERT"] = "User not found!";
+}
+
+<div class="text-center">
+    <h1>@ViewData["TITLE"]</h1>
+</div>
+
+@using (Html.BeginForm())
+{
+    <div class="searchBar">
+        <form action="/Controller/ProfileController/" method="post">
+            <label>Search:</label> @Html.TextBox("GitHubUsername", "", new {@placeholder = "Type in to search...", @required="required"})
+            <input class="searchBar" type="submit" value="Search" />
+        </form>
+    </div>
+}
+
+<script>
+    function showprofile() {
+        let statuscode = 0;
+        statuscode = @Html.DisplayFor(model => model.StatusCode);
+        if (statuscode === 0) {
+            document.getElementById("profileContainer").style.display = "none";
+            alert("@ViewData["USERALERT"]");
+            console.log("@ViewData["USERALERT"]");
+        }
+        if (statuscode === 200) {
+            document.getElementById("profileContainer").style.display = "block";
+            let div = document.createElement("div");
+            div.id = "profilenotification";
+            document.getElementById("profileContainer").appendChild(div);
+            div.innerHTML = "@ViewData["PROFILEMESSAGE"]";
+        }
+    }
+    document.addEventListener("DOMContentLoaded", () => { showprofile(); });
+</script>
+
+<div id="profileContainer">
+    <dl class="dl-horizontal">
+        <dt>
+            @*Html.DisplayFor(model => model.AvatarUrl)*@
+            <img src="@Model.AvatarUrl" alt="Avatar" width="200" height="200" />
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Login)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Login)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Bio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Bio)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Company)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Company)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+    </dl>
+</div>
