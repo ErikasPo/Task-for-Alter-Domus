@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace GitHubApp.Controllers
 {
-    ///This controller is responsible for Index,Repositories and Followers views
+    ///This controller is responsible for Profile view
     public class ProfileController : Controller
     {
         private const string GITHUBUSERSURL = "https://api.github.com/users/";
@@ -16,6 +16,7 @@ namespace GitHubApp.Controllers
         private const string REQUEST = "request";
         private HttpClient gitHubClient;
 
+        /// Creates new HttpClient and sets API parameters
         public ProfileController()
         {
             gitHubClient = new HttpClient();

@@ -12,44 +12,60 @@ namespace GitHubApp.Controllers
         private const string FOLLOWERS = "/followers";
         private const string USERAGENT = "User-Agent";
         private const string REQUEST = "request";
+        private HttpClient gitHubClient;
+
+        /// Creates new HttpClient and sets API parameters
+        public FollowersController()
+        {
+            gitHubClient = new HttpClient();
+            gitHubClient.DefaultRequestHeaders.Add(USERAGENT, REQUEST);
+            gitHubClient.BaseAddress = new Uri(GITHUBUSERSURL);
+        }
 
         /// Calls GitHub user followers API returns model with Followers view 
         public ActionResult Followers(string GitHubUsername)
         {
             FollowersViewModel model = new FollowersViewModel();
             model.FollowersList = new List<FollowersModel>();
-
+            model.StatusCode = 0;
             if (string.IsNullOrEmpty(GitHubUsername))
             {
                 return View(model);
             }
 
-            var gitHubClient = new HttpClient();
-            gitHubClient.DefaultRequestHeaders.Add(USERAGENT, REQUEST);
-            gitHubClient.BaseAddress = new Uri(GITHUBUSERSURL);
             HttpResponseMessage response = gitHubClient.GetAsync(GitHubUsername + FOLLOWERS).Result;
 
+            string followerData = "";
             if (response.IsSuccessStatusCode)
             {
-                try
-                {
-                    string followerData = response.Content.ReadAsStringAsync().Result;
-                    List<FollowersModel> followers = JsonConvert.DeserializeObject<List<FollowersModel>>(followerData);
+                followerData = response.Content.ReadAsStringAsync().Result;
+            }
+            else   /// When API rate limit is exceeded for testing
+            //    followerData = "{ \"login\": \"erikaspo\" }";
+            //model.StatusCode = 200;
+            {
+                model.StatusCode = (int)response.StatusCode;
+                return View(model);
+            }
 
-                    model.StatusCode = (int)response.StatusCode;
+            try
+            {
+                model.StatusCode = (int)response.StatusCode;
+                List<FollowersModel> followers = JsonConvert.DeserializeObject<List<FollowersModel>>(followerData);
 
-                    if (followers != null)
-                    {
-                        model.FollowersList = followers;
-                    }
-                }
-                catch (Exception ex)
+                if (followers != null)
                 {
-                    Trace.TraceError("Error occured when getting followers from GitHub API." + ex.StackTrace);
-                    return View(new List<FollowersModel>());
+                    model.FollowersList = followers;
                 }
             }
+            catch (Exception ex)
+            {
+                Trace.TraceError("Error occured when getting followers from GitHub API." + ex.StackTrace);
+                return View(new List<FollowersModel>());
+            }
+
             return View(model);
         }
     }
 }
+

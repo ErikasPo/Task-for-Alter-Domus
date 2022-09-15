@@ -26,7 +26,6 @@
         let statusCode = 0;
         statusCode = @Html.DisplayFor(model => model.StatusCode);
         let profileContainer = document.getElementById("profileContainer");
-        console.log(statusCode);
         if (statusCode != 200) {
             profileContainer.style.display = "none";
             if (statusCode === 404) {
@@ -37,9 +36,9 @@
                 console.log("@ViewData["RATELIMIT"]");
             }
         } else {
-            c.style.display = "block";
+            profileContainer.style.display = "block";
             let div = document.createElement("div");
-            div.id = "profilenotification";
+            div.id = "profileNotification";
             document.getElementById("profileContainer").appendChild(div);
             div.innerHTML = "@ViewData["PROFILEMESSAGE"]";
         }

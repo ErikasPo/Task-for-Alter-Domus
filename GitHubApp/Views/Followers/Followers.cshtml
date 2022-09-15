@@ -5,6 +5,7 @@
     ViewData["FOLLOWERSLABEL"] = "Followers:";
     ViewData["FOLLOWERSMESSAGE"] = "You have less than 5 Followers, please create more projects!";
     ViewData["USERALERT"] = "User not found!";
+    ViewData["RATELIMIT"] = "Too many API calls, API rate limit exceeded!";
 }
 <div class="text-center">
     <h1>@ViewData["TITLE"]</h1>
@@ -26,19 +27,23 @@
         count = @Html.DisplayFor(model => model.FollowersList.Count);
         let statusCode = 0;
         statusCode = @Html.DisplayFor(model => model.StatusCode);
-        if (statusCode === 0) {
-            document.getElementById("followersContainer").style.display = "none";
-            alert("@ViewData["USERALERT"]");
-            console.log("@ViewData["USERALERT"]");
+        let followersContainer = document.getElementById("followersContainer");
+        if (statusCode != 200) {
+            followersContainer.style.display = "none";
+            if (statusCode === 404) {
+                alert("@ViewData["USERALERT"]");
+                console.log("@ViewData["USERALERT"]");
+            } else if (statusCode === 403) {
+                alert("@ViewData["RATELIMIT"]");
+                console.log("@ViewData["RATELIMIT"]");
+            }
         }
-        else {
-            document.getElementById("followersContainer").style.display = "block";
-        }
-        if (statusCode === 200 && count < 5) {
+        else if (statusCode === 200 && count < 5) {
+            followersContainer.style.display = "block";
             let div = document.createElement("div");
-            div.id = "followersnotification";
+            div.id = "followersNotification";
             div.innerHTML = "@ViewData["FOLLOWERSMESSAGE"]";
-            document.getElementById("followersContainer").appendChild(div);
+            followersContainer.appendChild(div);
         }
     }
     document.addEventListener("DOMContentLoaded", () => { showfollowers(); });

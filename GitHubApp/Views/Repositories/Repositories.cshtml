@@ -5,6 +5,7 @@
     ViewData["REPOSITORIESLABEL"] = "Repositories:";
     ViewData["REPOSITORIESMESSAGE"] = "You have less than 5 Repositories, please create more projects!";
     ViewData["USERALERT"] = "User not found!";
+    ViewData["RATELIMIT"] = "Too many API calls, API rate limit exceeded!";
 }
 <div class="text-center">
     <h1>@ViewData["TITLE"]</h1>
@@ -26,19 +27,23 @@
         count = @Html.DisplayFor(model => model.RepositoriesList.Count);
         let statusCode = 0;
         statusCode = @Html.DisplayFor(model => model.StatusCode);
-        if (statusCode === 0) {
-            document.getElementById("repositoriesContainer").style.display = "none";
-            alert("@ViewData["USERALERT"]");
-            console.log("@ViewData["USERALERT"]");
+        let repositoriesContainer = document.getElementById("repositoriesContainer");
+        if (statusCode != 200) {
+            repositoriesContainer.style.display = "none";
+            if (statusCode === 404) {
+                alert("@ViewData["USERALERT"]");
+                console.log("@ViewData["USERALERT"]");
+            } else if (statusCode === 403) {
+                alert("@ViewData["RATELIMIT"]");
+                console.log("@ViewData["RATELIMIT"]");
+            }
         }
-        else {
-            document.getElementById("repositoriesContainer").style.display = "block";
-        }
-        if (statusCode === 200 && count < 5) {
+        else if (statusCode === 200 && count < 5) {
+            repositoriesContainer.style.display = "block";
             let div = document.createElement("div");
-            div.id = "repositorynotification";
+            div.id = "repositoryNotification";
             div.innerHTML = "@ViewData["REPOSITORIESMESSAGE"]";
-            document.getElementById("repositoriesContainer").appendChild(div);
+            repositoriesContainer.appendChild(div);
         }
     }
 
