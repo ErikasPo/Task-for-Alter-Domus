@@ -16,19 +16,19 @@ Alter Domus task:
 inform their GitHub id (login) and receive advices about how they can improve their own profiles.
 On the sprint plan, the following user stories were assigned to you:</p>
 
-<p> As a developer, I want to be informed if my profile does not have a biography, company and
+<p>* As a developer, I want to be informed if my profile does not have a biography, company and
 location filled, so that I can feed these values and keep my profile completed.
 Acceptance Criteria: Given my profile login on the web page input, when GitHub user
 properties “bio”, “company” and “location” are null/empty, then notify me to update those
 fields on my profile.</p>
 
-<p> As a developer, I want to be informed if I’m following less than five users or have less than
+<p>* As a developer, I want to be informed if I’m following less than five users or have less than
 five public repositories on my account, so that will engage me to look for other developers’
 activities and be more active on network and projects.
 Acceptance Criteria: Given my profile login on the web page input, when GitHub user
 properties “following” and “public_repos”</p>
 
-<p>You will be the only developer working on this user stories and eventually your code will be
+<p>* You will be the only developer working on this user stories and eventually your code will be
 maintained by another team. The project has sprints of ten days and it’s expected that you can finish
 both stories in the same sprint.</p>
 
