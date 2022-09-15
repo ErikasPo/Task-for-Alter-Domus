@@ -24,9 +24,9 @@
     function showrepositories() {
         let count = 0;
         count = @Html.DisplayFor(model => model.RepositoriesList.Count);
-        let statuscode = 0;
-        statuscode = @Html.DisplayFor(model => model.StatusCode);
-        if (statuscode === 0) {
+        let statusCode = 0;
+        statusCode = @Html.DisplayFor(model => model.StatusCode);
+        if (statusCode === 0) {
             document.getElementById("repositoriesContainer").style.display = "none";
             alert("@ViewData["USERALERT"]");
             console.log("@ViewData["USERALERT"]");
@@ -34,7 +34,7 @@
         else {
             document.getElementById("repositoriesContainer").style.display = "block";
         }
-        if (statuscode === 200 && count < 5) {
+        if (statusCode === 200 && count < 5) {
             let div = document.createElement("div");
             div.id = "repositorynotification";
             div.innerHTML = "@ViewData["REPOSITORIESMESSAGE"]";
