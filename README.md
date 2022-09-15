@@ -68,7 +68,6 @@ other industry standard Libs will be considered as a plus.
 
 - Design could be improved (style, responsive design)
 - More data from each API call could be displayed on each page
-- There is a bug on Repositories and Followers page which brings alert on page load, I didn't have enough time, sprint was too short to finish up all the pages :)
 
 ## Author
 
